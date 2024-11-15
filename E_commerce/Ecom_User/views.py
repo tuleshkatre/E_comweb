@@ -2,14 +2,18 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
-from .forms import SignupForm, ProductForm, AddressForm
+from .forms import SignupForm, ProductForm, AddressForm, UserUpdateForm
 from .models import Product, Order, Cart, CartItem, OrderItem, Profile
 from datetime import timezone
+from .models import User
+
 
 #Login section
 
+
 def home(request):
     return render(request, 'home.html')
+
 
 def register(request):
     if not request.user.is_authenticated:
@@ -45,19 +49,38 @@ def user_login(request):
         return render(request, 'login.html', {'form': fm})
     else:
         return redirect_user(request.user)
+    
+
+def update_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.user.is_authenticated and request.user.id == user_id:
+        if request.method == "POST":
+            user_form = UserUpdateForm(request.POST, instance=user)
+            if user_form.is_valid():
+                user_form.save()
+                return redirect_user(user)
+        else:
+            user_form = UserUpdateForm(instance=user)
+        
+        return render(request, 'user_update.html', {'user_form': user_form,})
+    else:
+        return redirect('/login/')
+
 
 def user_logout(request):
     logout(request)
     return redirect('/login/')
 
-def user_change_pass(request):
-    if request.user.is_authenticated:
+
+def user_change_pass(request, user_id):
+    user_id = request.user.id
+    if request.user.is_authenticated and request.user.id == user_id:
         if request.method == 'POST':
             fm = PasswordChangeForm(user=request.user, data=request.POST)
             if fm.is_valid():
                 fm.save()
                 update_session_auth_hash(request, fm.user)
-                return HttpResponseRedirect('/dashboard/')
+                return redirect_user(user=request.user)
         else:
             fm = PasswordChangeForm(user=request.user)
         return render(request, 'changepass.html', {'form': fm})
@@ -124,6 +147,7 @@ def add_product(request):
     else:
         return redirect('login')
     
+
 def delete_product(request, id):
     if request.user.is_authenticated and request.user.profile.role == 'Vendor':
         del_pro = Product.objects.get(id = id)
@@ -154,6 +178,7 @@ def view_cart(request):
     else:
         return redirect('login')
     
+
 def delete_cart(request, id):
     
     if request.user.is_authenticated and  request.user.profile.role == 'Customer':
@@ -164,6 +189,7 @@ def delete_cart(request, id):
         else:
            del_cart.delete()
     return redirect('view_cart')
+
 
 def checkout(request):
     if request.user.is_authenticated and  request.user.profile.role == 'Customer':

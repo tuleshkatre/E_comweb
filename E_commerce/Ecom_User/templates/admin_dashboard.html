@@ -64,6 +64,9 @@
 
     <footer>
         <p><a href="{% url 'logout' %}">Logout</a></p>
+        <p><a href="{% url 'changepass' request.user.id %}" class="back-link">change password</a></p>
+        <p><a href="{% url 'update_user' user.id %}">update</a></p>
+
     </footer>
 </body>
 </html>
