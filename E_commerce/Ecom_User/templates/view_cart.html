@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Cart</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .btn { padding: 10px 15px; background-color: #4CAF50; color: #fff; text-decoration: none; border-radius: 5px; display: inline-block; }
+        .delete-btn { background-color: #f44336; color: #fff; border: none; padding: 5px 10px; cursor: pointer; border-radius: 5px; }
+        .back-btn { padding: 10px 15px; background-color: #777; color: #fff; text-decoration: none; border-radius: 5px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h2>Your Cart</h2>
+
+    {% if cart_items %}
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.product.price }}</td>
+                <td>${{ item.quantity|add:item.product.price|add:item.product.price }}</td>
+                <td>
+                    <form action="{% url 'delete_cart' item.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <a href="{% url 'checkout' %}" class="btn">Proceed to Checkout</a>
+        <a href="{% url 'customer_dashboard' %}" class="back-btn">Back to Products</a>  <!-- Back button -->
+    {% else %}
+        <p>Your cart is empty.</p>
+        <a href="{% url 'customer_dashboard' %}" class="back-btn">Back to Products</a>  <!-- Back button for empty cart -->
+    {% endif %}
+</body>
+</html>

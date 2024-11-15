@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Basic styling for the form page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            color: #007bff;
+            text-align: center;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Add New Product</h2>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div>
+                <label for="id_name">Product Name:</label>
+                {{ form.name }}
+            </div>
+            
+            <div>
+                <label for="id_description">Description:</label>
+                {{ form.description }}
+            </div>
+            
+            <div>
+                <label for="id_price">Price:</label>
+                {{ form.price }}
+            </div>
+            
+            <div>
+                <label for="id_stock_quantity">Stock Quantity:</label>
+                {{ form.stock_quantity }}
+            </div>
+            
+            <div>
+                <label for="id_category">Category:</label>
+                {{ form.category }}
+            </div>
+            
+            <div>
+                <label for="id_image">Product Image (optional):</label>
+                {{ form.image }}
+            </div>
+            
+            <button type="submit">Add Product</button>
+        </form>
+        
+        <a href="{% url 'vendor_dashboard' %}" class="back-link">Back to Dashboard</a>
+    </div>
+</body>
+</html>
+
+
+
+
+

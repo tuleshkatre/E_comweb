@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #ff7e5f, #feb47b); /* Gradient background */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Form container styling */
+        .form-container {
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            border: 2px solid #ff7e5f;
+        }
+
+        .form-container h1 {
+            font-size: 32px;
+            color: #ff7e5f;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Input styling */
+        input[type="text"],
+        input[type="password"] {
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ff7e5f;
+            border-radius: 5px;
+            width: 100%;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #feb47b;
+            outline: none;
+        }
+
+        /* Button styling */
+        button, .signup-btn {
+            padding: 12px 0;
+            font-size: 18px;
+            color: white;
+            background-color: #ff7e5f;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover, .signup-btn:hover {
+            background-color: #feb47b;
+        }
+
+        button:active, .signup-btn:active {
+            background-color: #ff6f61;
+        }
+
+        /* Signup button styling */
+        .signup-btn {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+        }
+
+        .account-message {
+            font-size: 14px;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .account-message a {
+            text-decoration: none;
+            color: #ff7e5f;
+        }
+
+        .reset-password-link {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .reset-password-link a {
+            text-decoration: none;
+            color: #ff7e5f;
+        }
+
+        .reset-password-link a:hover {
+            color: #feb47b;
+        }
+
+        .csrf-token {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Login</h1>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="reset-password-link">
+            <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+        </div>
+
+        <div class="account-message">
+            <p>Don't have an account? <a href="{% url 'register' %}">Sign Up</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

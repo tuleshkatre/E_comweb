@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff7e5f, #feb47b); /* Gradient background */
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px 20px; /* Reduced padding */
+            border-radius: 8px; /* Smaller border radius */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px; /* Reduced max-width */
+            text-align: center;
+            border: 2px solid #ff7e5f; /* Border color matching the background */
+        }
+
+        .form-container h1 {
+            font-size: 28px; /* Reduced font size */
+            color: #ff7e5f; /* Color of the heading */
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Reduced gap between form fields */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding: 10px; /* Reduced padding */
+            font-size: 14px; /* Smaller font size */
+            border: 1px solid #ff7e5f; /* Matching border color */
+            border-radius: 5px;
+            width: 100%;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #feb47b; /* Highlight border color on focus */
+            outline: none;
+        }
+
+        .error-message {
+            color: #d9534f;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        button {
+            padding: 10px 0; /* Reduced padding */
+            font-size: 16px; /* Smaller font size */
+            color: white;
+            background-color: #ff7e5f; /* Button background color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #feb47b; /* Button hover color */
+        }
+
+        button:active {
+            background-color: #ff6f61; /* Active state color */
+        }
+
+        .account-message {
+            font-size: 15px; /* Smaller font size */
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .account-message a {
+            text-decoration: none;
+            color: #ff7e5f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Signup</h1>
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="form-field">
+                    {{ field.label_tag }}
+                    {{ field }}
+
+                    {% if field.errors %}
+                        <div class="error-message">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <div class="account-message">
+            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

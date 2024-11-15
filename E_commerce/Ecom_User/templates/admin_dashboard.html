@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{ name }} (Admin)</h1>
+    </header>
+
+    <main>
+        <!-- Product List Section -->
+        <section>
+            <h2>Product List</h2>
+            <ul>
+                {% for product in products %}
+                    <li>{{ product.name }} - ${{ product.price }} (Vendor: {{ product.vendor.username }})</li>
+                {% empty %}
+                    <p>No products available.</p>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <!-- Orders Section -->
+        <section>
+            <h2>Orders</h2>
+            <ul>
+                {% for order in orders %}
+                    <li>Order ID: {{ order.id }} | Customer: {{ order.customer.username }} | Total: ${{ order.total_amount }}</li>
+                {% empty %}
+                    <p>No orders available.</p>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <!-- Vendors Section -->
+        <section>
+            <h2>Vendors</h2>
+            <ul>
+                {% for vendor in vendors %}
+                    <li>{{ vendor.user.username }} - {{ vendor.user.email }}</li>
+                {% empty %}
+                    <p>No vendors registered.</p>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <!-- Customers Section -->
+        <section>
+            <h2>Customers</h2>
+            <ul>
+                {% for customer in customers %}
+                    <li>{{ customer.user.username }} - {{ customer.user.email }}</li>
+                {% empty %}
+                    <p>No customers registered.</p>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p><a href="{% url 'logout' %}">Logout</a></p>
+    </footer>
+</body>
+</html>
