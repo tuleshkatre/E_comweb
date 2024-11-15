@@ -13,6 +13,7 @@ class SignupForm(UserCreationForm):
         fields = ['username', 'first_name', 'last_name', 'email']
         labels = {'email': 'Email'}
 
+
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
@@ -28,6 +29,7 @@ class ProductForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 3}),
         }
 
+
 class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
@@ -39,4 +41,6 @@ class AddressForm(forms.ModelForm):
             'zip_code': forms.TextInput(attrs={'placeholder': 'ZIP Code'}),
             'country': forms.TextInput(attrs={'placeholder': 'Country'}),
         }
+
+
 
